@@ -1,0 +1,7 @@
+.idea
+/node_modules
+*.fig
+*.psd
+/.cache
+/dist
+package-lock.json
