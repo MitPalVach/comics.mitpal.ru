@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_KEY} from "../constans/api";
+import {API_KEY} from "../constants/api";
 
 class GetDataApi {
     async getData(url) {

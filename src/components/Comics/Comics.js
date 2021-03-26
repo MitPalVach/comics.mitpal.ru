@@ -1,14 +1,15 @@
-import {API_URL, IMG_NOT_AVAILABLE, IMG_STANDARD_XLARGE, URL_CHARACTERS, URL_COMICS} from "../../constans/api";
+import {API_URL, IMG_NOT_AVAILABLE, IMG_STANDARD_XLARGE, URL_CHARACTERS, URL_COMICS} from "../../constants/api";
 import {getDataApi} from "../../utils/getDataApi";
-import {ROOT_INDEX} from "../../constans/root"
+import {ROOT_INDEX} from "../../constants/root"
+
+import Error from "../Error/Error";
+import Characters from "../Characters/Characters";
 
 import './Comics.css';
 
 
 class Comics {
-    async render() {
-        const data = await getDataApi.getData(API_URL + URL_COMICS);
-
+    renderComics(data) {
         let htmlContent = '';
 
         data.forEach(({id, title, thumbnail: {extension, path}}) => {
@@ -31,6 +32,24 @@ class Comics {
                 ${htmlContent}
             </ul>
         `;
+
+
+    }
+
+    async render() {
+        const data = await getDataApi.getData(API_URL + URL_COMICS);
+
+        // >>>>>
+        // if (data) {
+        //     this.renderComics(data);
+        // } else {
+        //     Error.render();
+        // }
+        // === тоже самое что и сверху но с тернарным оператором
+        data ? this.renderComics(data) : Error.render();
+        // <<<<<
+
+        this.renderComics(data);
     }
 
     eventListener() {
@@ -38,7 +57,7 @@ class Comics {
             const uri = element.getAttribute('data-uri');
 
             element.addEventListener('click', () => {
-                console.log(uri);
+                Characters.render(uri);
             });
         });
     }
